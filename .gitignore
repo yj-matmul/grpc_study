@@ -1,1 +1,9 @@
 # Directory #
+.gradle
+.idea
+gradle
+gradlew
+gradlew.bat
+build
+bin
+settings.gradle
