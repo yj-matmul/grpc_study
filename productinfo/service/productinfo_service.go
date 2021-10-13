@@ -12,6 +12,7 @@ import (
 // server는 ecommerce/product_info 를 구현하는 데 사용된다.
 type server struct {
 	productMap map[string]*pb.Product
+	pb.UnimplementedProductInfoServer
 }
 
 // AddProduct는 ecommerce.AddProduct를 구현한다.
