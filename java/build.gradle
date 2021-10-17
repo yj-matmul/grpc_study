@@ -1,6 +1,16 @@
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//    }
+//    dependencies {
+//        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.10'
+//    }
+//}
+
 plugins {
     id 'java'
     id 'com.google.protobuf' version '0.8.17'
+    id 'application'
 }
 
 group 'org.example'
@@ -22,6 +32,8 @@ test {
     useJUnitPlatform()
 }
 
+
+
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.17.3"
@@ -34,6 +46,17 @@ protobuf {
     generateProtoTasks {
         all()*.plugins {
             grpc {}
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs(
+                'build/generated/source/proto/main/grpc',
+                'build/generated/source/proto/main/java'
+            )
         }
     }
 }

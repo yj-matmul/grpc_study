@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "sample";
+
+package sample;
+
+// sample service describes all service
+service SampleService {
+  rpc getProductInfo(ProductID) returns (ProductInfo) {}
+  rpc addProductInfo(ProductInfo) returns (ProductID) {}
+}
+
+message ProductInfo {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  int32 price = 4;
+}
+
+message ProductID {
+  string id = 1;
+}
