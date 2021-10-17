@@ -16,6 +16,7 @@ message ProductInfo {
   string name = 2;
   string description = 3;
   int32 price = 4;
+  bytes data = 5;
 }
 
 message ProductID {

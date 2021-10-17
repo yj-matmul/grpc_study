@@ -1,10 +1,12 @@
 package sample;
 
+import com.google.protobuf.ByteString;
 import io.grpc.Channel;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
 
+import java.io.UnsupportedEncodingException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,13 +22,15 @@ public class ServiceClient {
     }
 
     /** add product information to server */
-    public void addProductInfo() {
+    public void addProductInfo() throws UnsupportedEncodingException {
         logger.info("add product information to server");
+        ByteString data = ByteString.copyFrom("client byte data", "utf-8");
         ProductInfo request = ProductInfo.newBuilder()
                 .setId("1")
                 .setName("apple")
                 .setDescription("Things of Fruit")
                 .setPrice(1000)
+                .setData(data)
                 .build();
         ProductID response;
         try {
@@ -54,7 +58,8 @@ public class ServiceClient {
         Integer price = response.getPrice();
         logger.info("success to get product info \nid: " + response.getId() +
                 "\nname: " + response.getName() +
-                "\nprice: " + price);
+                "\nprice: " + price +
+                "\ndata: " + response.getData().toString());
     }
 
     public static void main(String[] args) throws Exception {
