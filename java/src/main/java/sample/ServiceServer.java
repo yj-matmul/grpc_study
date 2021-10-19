@@ -65,6 +65,26 @@ public class ServiceServer {
             responseObserver.onNext(productInfo);
             responseObserver.onCompleted();
         }
+
+        /** get stream request from client and return single response */
+        public StreamObserver<StreamingRequest> clientStream(final StreamObserver<SingleResponse> responseObserver) {
+            return new StreamObserver<StreamingRequest>() {
+                @Override
+                public void onNext(StreamingRequest value) {
+
+                }
+
+                @Override
+                public void onError(Throwable t) {
+
+                }
+
+                @Override
+                public void onCompleted() {
+
+                }
+            };
+        }
     }
 
     private void blockUntilShutdown() throws InterruptedException {

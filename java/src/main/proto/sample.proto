@@ -9,6 +9,7 @@ package sample;
 service SampleService {
   rpc getProductInfo(ProductID) returns (ProductInfo) {}
   rpc addProductInfo(ProductInfo) returns (ProductID) {}
+  rpc StreamingClient(stream StreamingRequest) returns (SingleResponse) {}
 }
 
 message ProductInfo {
@@ -21,4 +22,23 @@ message ProductInfo {
 
 message ProductID {
   string id = 1;
+}
+
+message StreamingRequest {
+  string encoding = 1; //pcm16 only
+  int32 sample_rate_hertz = 2;
+  bool single_utterance = 3; //not used
+  bool interim_result = 4; //False only
+  bool return_flag = 5; //used for LongRecognize()
+  int32 num_channels = 6; // positive int (1 or 2 or 3 or 4 ...)
+  bytes audio_content = 7;
+}
+
+message SingleResponse {
+  string speechEventType = 1; // event type (e.g., silence, utterance)
+  string result = 2; // STT result text
+  float score = 3; // float
+  int32 n_token = 4; // number of tokens
+  float start_time = 5;
+  float end_time = 6;
 }
