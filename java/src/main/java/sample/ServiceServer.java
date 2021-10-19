@@ -7,6 +7,7 @@ import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ServiceServer {
@@ -67,21 +68,30 @@ public class ServiceServer {
         }
 
         /** get stream request from client and return single response */
-        public StreamObserver<StreamingRequest> clientStream(final StreamObserver<SingleResponse> responseObserver) {
+        public StreamObserver<StreamingRequest> StreamingClient(final StreamObserver<SingleResponse> responseObserver) {
             return new StreamObserver<StreamingRequest>() {
                 @Override
-                public void onNext(StreamingRequest value) {
-
+                public void onNext(StreamingRequest request) {
+                    String content = request.getAudioContent().toString();
+                    logger.info("server onNext" + content);
                 }
 
                 @Override
                 public void onError(Throwable t) {
-
+                    logger.log(Level.WARNING, "encounter client error on server", t);
                 }
 
                 @Override
                 public void onCompleted() {
-
+                    responseObserver.onNext(SingleResponse.newBuilder()
+                    .setSpeechEventType("utterance")
+                    .setResult("response success")
+                    .setScore(1.5F)
+                    .setNToken(5)
+                    .setStartTime(1.0F)
+                    .setEndTime(2.0F)
+                    .build());
+                    responseObserver.onCompleted();
                 }
             };
         }
