@@ -67,7 +67,7 @@ public class ServiceClient {
             @Override
             public void onNext(SingleResponse response) {
                 logger.info("speech type: " + response.getSpeechEventType() + "\n" +
-                        "result" + response.getResult());
+                        "result " + response.getResult());
             }
 
             @Override

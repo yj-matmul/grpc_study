@@ -68,12 +68,12 @@ public class ServiceServer {
         }
 
         /** get stream request from client and return single response */
-        public StreamObserver<StreamingRequest> StreamingClient(final StreamObserver<SingleResponse> responseObserver) {
+        public StreamObserver<StreamingRequest> streamingClient(final StreamObserver<SingleResponse> responseObserver) {
             return new StreamObserver<StreamingRequest>() {
                 @Override
                 public void onNext(StreamingRequest request) {
                     String content = request.getAudioContent().toString();
-                    logger.info("server onNext" + content);
+                    logger.info("server onNext " + content);
                 }
 
                 @Override
